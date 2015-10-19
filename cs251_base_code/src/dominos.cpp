@@ -344,7 +344,67 @@ namespace cs251
       }
 
     }
+  
+   //The pulley system above spring
+    {
+      b2BodyDef *bd = new b2BodyDef;
+      bd->type = b2_dynamicBody;
+      bd->position.Set(0,15);
+      bd->fixedRotation = true;
 
+      //The open box
+      b2FixtureDef *fd1 = new b2FixtureDef;
+      fd1->density = 10.0;
+      fd1->friction = 0.5;
+      fd1->restitution = 0.5f;
+      fd1->shape = new b2PolygonShape;
+      b2PolygonShape bs1;
+      bs1.SetAsBox(2,0.2, b2Vec2(0.f,-2.0f), 0);
+      fd1->shape = &bs1;
+      b2FixtureDef *fd2 = new b2FixtureDef;
+      fd2->density = 10.0;
+      fd2->friction = 0.5;
+      fd2->restitution = 0.5f;
+      fd2->shape = new b2PolygonShape;
+      b2PolygonShape bs2;
+      bs2.SetAsBox(0.2,2, b2Vec2(2.0f,0.f), 0);
+      fd2->shape = &bs2;
+      b2FixtureDef *fd3 = new b2FixtureDef;
+      fd3->density = 10.0;
+      fd3->friction = 0.5;
+      fd3->restitution = 0.5f;
+      fd3->shape = new b2PolygonShape;
+      b2PolygonShape bs3;
+      bs3.SetAsBox(0.2,2, b2Vec2(-2.0f,0.f), 0);
+      fd3->shape = &bs3;
+
+      b2Body* box1 = m_world->CreateBody(bd);
+      box1->CreateFixture(fd1);
+      box1->CreateFixture(fd2);
+      box1->CreateFixture(fd3);
+      box1->SetGravityScale(0);
+
+     //The bar
+      b2PolygonShape bs;
+       bs.SetAsBox(2.0f, 0.2f);
+      fd1->shape = &bs;
+      bd->position.Set(12,20);
+      fd1->density = 10.0;
+      b2Body* box2 = m_world->CreateBody(bd);
+      box2->CreateFixture(fd1);
+      box2->SetGravityScale(0);
+
+      // The pulley joint
+      b2PulleyJointDef* myjoint = new b2PulleyJointDef();
+      b2Vec2 worldAnchorOnBody1(0, 15); // Anchor point on body 1 in world axis
+      b2Vec2 worldAnchorOnBody2(12, 20); // Anchor point on body 2 in world axis
+      b2Vec2 worldAnchorGround1(0, 20); // Anchor point for ground 1 in world axis
+      b2Vec2 worldAnchorGround2(6, 20); // Anchor point for ground 2 in world axis
+      float32 ratio = 1.0; // Define ratio
+      myjoint->Initialize(box1, box2, worldAnchorGround1,worldAnchorGround2,box1->GetWorldCenter(), box2->GetWorldCenter(), ratio);
+      m_world->CreateJoint(myjoint);
+
+    }
 
 
  // surface
