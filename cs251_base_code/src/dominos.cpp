@@ -407,6 +407,77 @@ namespace cs251
       b1->CreateFixture(fd1);
     }
    }
+	//spring
+    {
+      b2PolygonShape shape;
+      shape.SetAsBox(2.5f, 0.2f);
+
+      b2BodyDef bd1,bd2,bd3,bd4;
+      bd1.type = b2_dynamicBody;
+      bd2.type = b2_dynamicBody;
+      bd3.type = b2_dynamicBody;
+      bd4.type = b2_dynamicBody;
+
+      b2FixtureDef *fd = new b2FixtureDef;
+      fd->density = 1.2f;
+      fd->shape = new b2PolygonShape;
+      fd->shape = &shape;
+      fd->friction = 4;
+      fd->restitution = 0.0f;
+        bd1.position.Set(12.2f, 14.0f);
+        bd2.position.Set(12.2f, 14.0f);
+        bd3.position.Set(15.2f, 14.0f);
+        bd4.position.Set(15.2f, 14.0f);
+        bd1.angle=53*DEGTORAD;
+        bd2.angle=-53*DEGTORAD;
+        bd3.angle=53*DEGTORAD;
+        bd4.angle=-53*DEGTORAD;
+
+        b2Body* body1 = m_world->CreateBody(&bd1);
+        b2Body* body2 = m_world->CreateBody(&bd2);
+        b2Body* body3 = m_world->CreateBody(&bd3);
+        b2Body* body4 = m_world->CreateBody(&bd4);
+         body1->CreateFixture(fd);
+         body2->CreateFixture(fd);
+         body3->CreateFixture(fd);
+         body4->CreateFixture(fd);
+        /* body1->SetGravityScale(0);
+         body2->SetGravityScale(0);
+         body3->SetGravityScale(0);
+         body4->SetGravityScale(0);*/
+      b2RevoluteJointDef jointDef1;
+      jointDef1.bodyA = body1;
+      jointDef1.bodyB = body4;
+      //jointDef1.maxLength=0.10001f;
+      jointDef1.localAnchorA.Set(2.5,0);
+      jointDef1.localAnchorB.Set(-2.5,0);
+      jointDef1.collideConnected = true;
+      m_world->CreateJoint(&jointDef1);
+      b2RevoluteJointDef jointDef2;
+      jointDef2.bodyA = body2;
+      jointDef2.bodyB = body3;
+      //jointDef2.maxLength=0.10001f;
+      jointDef2.localAnchorA.Set(2.5,0);
+      jointDef2.localAnchorB.Set(-2.5,0);
+      jointDef2.collideConnected = true;
+      m_world->CreateJoint(&jointDef2);
+      b2RevoluteJointDef jointDef3;
+      jointDef3.bodyA = body1;
+      jointDef3.bodyB = body2;
+      //jointDef3.maxLength=0.00001f;
+      jointDef3.localAnchorA.Set(0,0);
+      jointDef3.localAnchorB.Set(0,0);
+      jointDef3.collideConnected = false;
+      m_world->CreateJoint(&jointDef3);
+      b2RevoluteJointDef jointDef4;
+      jointDef4.bodyA = body3;
+      jointDef4.bodyB = body4;
+      //jointDef4.maxLength=0.00001f;
+      jointDef4.localAnchorA.Set(0,0);
+      jointDef4.localAnchorB.Set(0,0);
+      jointDef4.collideConnected = false;
+      m_world->CreateJoint(&jointDef4);
+      }
 
       //conveyor belt
       {
