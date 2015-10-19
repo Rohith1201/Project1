@@ -407,6 +407,46 @@ namespace cs251
       b1->CreateFixture(fd1);
     }
    }
+   //The pulley system near wheels
+    {
+      b2BodyDef *bd = new b2BodyDef;
+      bd->type = b2_dynamicBody;
+      bd->position.Set(27.0,11);
+      bd->fixedRotation = true;
+
+      //The open box
+      b2FixtureDef *fd1 = new b2FixtureDef;
+      fd1->density = 10.0;
+      fd1->friction = 0.0;
+      fd1->restitution = 0.0f;
+      fd1->shape = new b2PolygonShape;
+      b2PolygonShape bs;
+      bs.SetAsBox(2.0f, 0.1f);
+      fd1->shape = &bs;
+
+      b2Body* box1 = m_world->CreateBody(bd);
+      box1->CreateFixture(fd1);
+
+      //The bar
+      bd->position.Set(38,14.0);
+      fd1->density = 5.0;
+      fd1->shape = new b2PolygonShape;
+      b2PolygonShape s;
+      s.SetAsBox(0.2f, 2.0f);
+      fd1->shape = &s;
+      b2Body* box2 = m_world->CreateBody(bd);
+      box2->CreateFixture(fd1);
+
+      // The pulley joint
+      b2PulleyJointDef* myjoint = new b2PulleyJointDef();
+      b2Vec2 worldAnchorOnBody1(27, 11); // Anchor point on body 1 in world axis
+      b2Vec2 worldAnchorOnBody2(38, 14.0); // Anchor point on body 2 in world axis
+      b2Vec2 worldAnchorGround1(27, 24); // Anchor point for ground 1 in world axis
+      b2Vec2 worldAnchorGround2(38, 24); // Anchor point for ground 2 in world axis
+      float32 ratio = 1.0f; // Define ratio
+      myjoint->Initialize(box1, box2, worldAnchorGround1, worldAnchorGround2, box1->GetWorldCenter(), box2->GetWorldCenter(), ratio);
+      m_world->CreateJoint(myjoint);
+    }
    //bigpulley on left side
     {
      //The pulley system
