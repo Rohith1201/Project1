@@ -407,6 +407,85 @@ namespace cs251
       b1->CreateFixture(fd1);
     }
    }
+   //bigpulley on left side
+    {
+     //The pulley system
+
+      b2BodyDef *bd = new b2BodyDef;
+      bd->type = b2_dynamicBody;
+      bd->position.Set(-36,30);
+      bd->fixedRotation = true;
+
+      //The open box
+      b2FixtureDef *fd1 = new b2FixtureDef;
+      fd1->density = 0.0;
+      fd1->friction = 0.5;
+      fd1->restitution = 0.0f;
+      fd1->shape = new b2PolygonShape;
+      b2PolygonShape bs1;
+      bs1.SetAsBox(2,0.2, b2Vec2(0.f,-1.9f), 0);
+      fd1->shape = &bs1;
+      b2FixtureDef *fd2 = new b2FixtureDef;
+      fd2->density = 0.0;
+      fd2->friction = 0.5;
+      fd2->restitution = 0.f;
+      fd2->shape = new b2PolygonShape;
+      b2PolygonShape bs2;
+      bs2.SetAsBox(0.2,2, b2Vec2(1.5f,0.f), 0);
+      fd2->shape = &bs2;
+      b2FixtureDef *fd3 = new b2FixtureDef;
+      fd3->density = 0.0;
+      fd3->friction = 0.5;
+      fd3->restitution = 0.f;
+      fd3->shape = new b2PolygonShape;
+      b2PolygonShape bs3;
+      bs3.SetAsBox(0.2,2, b2Vec2(-1.5f,0.f), 0);
+      fd3->shape = &bs3;
+
+      b2Body* box1 = m_world->CreateBody(bd);
+      box1->CreateFixture(fd1);
+      box1->CreateFixture(fd2);
+      box1->CreateFixture(fd3);
+
+      //The bar
+      bd->position.Set(-42,25);
+    //  fd1->density = 40.0;
+      b2Body* box2 = m_world->CreateBody(bd);
+      //box2->CreateFixture(fd1);
+
+      // The pulley joint fd1- fd1->density = 40.0;>density = 40.0;
+      b2PulleyJointDef* myjoint = new b2PulleyJointDef();
+      b2Vec2 worldAnchorOnBody1(-36, 30); // Anchor point on body 1 in world axis
+      b2Vec2 worldAnchorOnBody2(-42, 25); // Anchor point on body 2 in world axis
+      b2Vec2 worldAnchorGround1(-36, 35); // Anchor point for ground 1 in world axis
+      b2Vec2 worldAnchorGround2(-42, 35); // Anchor point for ground 2 in world axis
+      float32 ratio = 1.0f; // Define ratio
+      myjoint->Initialize(box1, box2, worldAnchorGround1, worldAnchorGround2, box1->GetWorldCenter(), box2->GetWorldCenter(), ratio);
+      m_world->CreateJoint(myjoint);
+
+     //The pulley system
+      bd->position.Set(-36,20);
+     //The bar
+      b2PolygonShape bs;
+       bs.SetAsBox(1.6f, 0.2f);
+      fd1->shape = &bs;
+      fd1->friction = 0.0;
+      fd1->density = 0.0;
+      b2Body* box3 = m_world->CreateBody(bd);
+      box3->CreateFixture(fd1);
+      box3->SetGravityScale(0);
+
+      // The pulley joint
+      b2PulleyJointDef* myjoint1 = new b2PulleyJointDef();
+      b2Vec2 worldAnchorOnBody3(-42, 25); // Anchor point on body 1 in world axis
+      b2Vec2 worldAnchorOnBody4(-36, 20); // Anchor point on body 2 in world axis
+      b2Vec2 worldAnchorGround3(-42, 20); // Anchor point for ground 1 in world axis
+      b2Vec2 worldAnchorGround4(-41.9, 20); // Anchor point for ground 2 in world axis
+     // float32 ratio = 1.0; // Define ratio
+      myjoint1->Initialize(box2, box3, worldAnchorGround3,worldAnchorGround4,box2->GetWorldCenter(), box3->GetWorldCenter(), ratio);
+      m_world->CreateJoint(myjoint1);
+    }
+
 	//spring
     {
       b2PolygonShape shape;
