@@ -485,7 +485,42 @@ namespace cs251
 	  b2Body* body = m_world->CreateBody(&bd);
 	  body->CreateFixture(&fd);
     }
+	
+     //lifting
+     {
+      b2PolygonShape shape;
+      shape.SetAsBox(1.0f, 0.1f);
 
+      b2BodyDef bd1,bd2;
+      bd1.type = b2_kinematicBody;
+      bd2.type = b2_kinematicBody;
+      b2FixtureDef *fd = new b2FixtureDef;
+      fd->density = 1.2f;
+      fd->shape = new b2PolygonShape;
+      fd->shape = &shape;
+      fd->friction = 1;
+      fd->restitution = 0.0f;
+      for(int i=0;i<15;i++){
+        bd1.position.Set(41.0f, 13.5f+i*2.0f);
+        bd2.position.Set(41.0f, 13.5f+i*2.0f);
+        bd1.angle=i*DEGTORAD;
+        bd2.angle=(90+i)*DEGTORAD;
+        b2Body* body1 = m_world->CreateBody(&bd1);
+        b2Body* body2 = m_world->CreateBody(&bd2);
+         body1->CreateFixture(fd);
+         body2->CreateFixture(fd);
+
+      b2RevoluteJointDef jointDef1;
+      jointDef1.bodyA = body1;
+      jointDef1.bodyB = body2;
+      jointDef1.localAnchorA.Set(0,0);
+      jointDef1.localAnchorB.Set(0,0);
+      jointDef1.collideConnected = false;
+      m_world->CreateJoint(&jointDef1);
+      body1->SetAngularVelocity(3);
+      body2->SetAngularVelocity(3);
+      }
+     }
 
 //skksm
   }
