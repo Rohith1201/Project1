@@ -842,7 +842,7 @@ namespace cs251
 	  bd.type = b2_dynamicBody;
 	  bd.position.Set(19.5f, 13.0f);
 	  b2Body* body = m_world->CreateBody(&bd);
-	  body->CreateFixture(&fd);
+	  body->CreateFixture(&fd1);
       }
 
       //conveyor belt
