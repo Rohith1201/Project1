@@ -31,7 +31,7 @@ GL_ROOT=/usr/include/
 LIBS = -lBox2D -lglui -lglut -lGLU -lGL
 
 # Compiler and Linker flags
-CPPFLAGS =-g -O3 -Wall -fno-strict-aliasing
+CPPFLAGS =-g -O3 -pg -Wall -fno-strict-aliasing
 CPPFLAGS+=-I $(BOX2D_ROOT)/include -I $(GLUI_ROOT)/include
 LDFLAGS+=-L $(BOX2D_ROOT)/lib -L $(GLUI_ROOT)/lib
 
@@ -68,7 +68,7 @@ setup:
 
 $(BINDIR)/$(TARGET): $(OBJS)
 	@$(PRINTF) "$(MESG_COLOR)Building executable:$(NO_COLOR) $(FILE_COLOR) %16s$(NO_COLOR)" "$(notdir $@)"
-	@$(CC) -o $@ $(LDFLAGS) $(OBJS) $(LIBS) 2> temp.log || touch temp.err
+	@$(CC) -O3 -pg -o $@ $(LDFLAGS) $(OBJS) $(LIBS) 2> temp.log || touch temp.err
 	@if test -e temp.err; \
 	then $(PRINTF) $(ERR_FMT) $(ERR_STRING) && $(CAT) temp.log; \
 	elif test -s temp.log; \
@@ -90,16 +90,56 @@ $(OBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
 	fi;
 	@$(RM) -f temp.log temp.err
 
-doc:
-	@$(ECHO) -n "Generating Doxygen Documentation ...  "
-	@$(RM) -rf doc/html
-	@$(DOXYGEN) $(DOCDIR)/Doxyfile 2 > /dev/null
-	@$(ECHO) "Done"
-
 clean:
 	@$(ECHO) -n "Cleaning up..."
 	@$(RM) -rf $(OBJDIR) *~ $(DEPS) $(SRCDIR)/*~
+	@rm -f report.aux
+	@rm -f report.log
+	@rm -f report.bcf
+	@rm -f report.run.xml
+	@rm -f report.out
+	@rm -f report.pdf
+	@rm -f report.bbl
+	@rm -f report.blg
+	@rm -f report.dvi
+	@rm -f presentation.aux
+	@rm -f presentation.log
+	@rm -f presentation.bcf
+	@rm -f presentation.run.xml
+	@rm -f presentation.out
+	@rm -f presentation.pdf
+	@rm -f presentation.bbl
+	@rm -f presentation.blg
+	@rm -f presentation.dvi
+	@rm -f presentation.snm
+	@rm -f presentation.nav
+	@rm -f presentation.toc
+	@rm -f profile.dot
+	@rm -f profile.txt
+	@rm -f profile.png
+	@rm -f gmon.out
 	@$(ECHO) "Done"
 
 distclean: clean
 	@$(RM) -rf $(BINDIR) $(DOCDIR)/html
+
+codeDoc:
+	@$(ECHO) -n "Doxygen Documentation of Group-10...  "
+	@$(RM) -rf doc/html
+	@$(DOXYGEN) $(DOCDIR)/Doxyfile 2 > /dev/null
+	@$(ECHO) "Done"
+profile:
+	@bin/./cs251_base
+	@gprof bin/./cs251_base gmon.out>profile.txt
+	@python3 gprof2dot.py profile.txt > profile.dot
+	@dot -Tpng profile.dot>profile.png
+	@rm -f profile.dot
+report:
+	@pdflatex report.tex
+	@pdflatex presentation.tex
+
+release:
+	@echo "extracting Box2D"
+	@tar xzf external/src/Box2D.tgz -C external/src
+	@cd external;cd src;cd Box2D;mkdir -p build251;cd build251;cmake -DCMAKE_BUILD_TYPE=Release ../;make;make install
+	@echo "setup done"
