@@ -41,7 +41,7 @@ using namespace std;
 
 namespace cs251
 {
-  /**  This is the constructor
+  /**  The is the constructor
    * This is the documentation block for the constructor.
    */
 
@@ -163,7 +163,7 @@ namespace cs251
     }
 
   // alarm shelf
-  //! 5.HORIZONTAL SHELF ON WHICH ALARM IS PLACED
+    //! 5.HORIZONTAL SHELF ON WHICH ALARM IS PLACED
      /*! * alarm is a body of type b2Body* which represents the horizontal shelf on which alarm is placed.
       *  * alarmbutton is a body of type b2Body* which represents the alarm button.
       *  * bd is of type b2Bodydef which defines the bodies alarm,alarmbutton.
@@ -232,7 +232,7 @@ namespace cs251
     }
 
     //The train of small spheres
-     //! 7.ALL SPHERES IN THE BOX2D WORLD
+    //! 7.ALL SPHERES IN THE BOX2D WORLD
      /*! * spherebody is a body of type b2Body* which represents a sphere.
       *  * ballbd is of type b2Bodydef which defines the body spherebody.
       *  * circle is of type b2CircleShape which defines the shape of spherebody as a circle.
@@ -309,12 +309,15 @@ namespace cs251
 	  ballfd.density = 30.0f;
       spherebody = m_world->CreateBody(&ballbd);
 	  spherebody->CreateFixture(&ballfd);
+	  //ballbd.position.Set(32.0+i*0.001,i-1.5);
+	  //spherebody1 = m_world->CreateBody(&ballbd);
+	  //spherebody1->CreateFixture(&ballfd);
 	  }
 	}
     }
 
      //The pulley system below pendulum
-     //! 8.PULLEY SYSTEM BELOW PENDULUM
+    //! 8.PULLEY SYSTEM BELOW PENDULUM
      /*! * box1,box2 are bodies of type b2Body* which represents the open box,bar in pulley system.
       *  * bd is of type b2Bodydef which defines the bodies box1,box2.
       *  * bs1,bs2,bs3 are of type b2PolygonShape which defines the shape of bodies.
@@ -387,7 +390,7 @@ namespace cs251
     }
 
         //The revolving horizontal platform
-     //! 9.ROTATING PLATFORMS
+    //! 9.ROTATING PLATFORMS
      /*! * body,body2 are bodies of type b2Body* which represents the rotating platform.
       *  * bd,bd2 are of type b2Bodydef which defines the bodies body,body2 respectively.
       *  * shape,shape2 are of type b2PolygonShape which defines the shape of body,body2.
@@ -413,6 +416,8 @@ namespace cs251
       fd->density = 1.f;
       fd->shape = new b2PolygonShape;
       fd->shape = &shape;
+
+
       b2PolygonShape shape2;
       shape2.SetAsBox(0.2f, 2.8f);
       b2BodyDef bd2;
@@ -437,10 +442,12 @@ namespace cs251
       jointDef.collideConnected = false;
       m_world->CreateJoint(&jointDef);
       }
+
     }
 
+
     //The pulley system above spring
-     //! 10.PULLEY SYSTEM ABOVE SPRING
+    //! 10.PULLEY SYSTEM ABOVE SPRING
      /*! * box1,box2 are bodies of type b2Body* which represents the open box,bar in pulley system.
       *  * bd is of type b2Bodydef which defines the bodies box1,box2.
       *  * bs1,bs2,bs3 are of type b2PolygonShape which defines the shape of bodies.
@@ -520,7 +527,7 @@ namespace cs251
     }
 
  // surface
- //! 11.ALL THE EDGES IN THE BOX2D WORLD
+//! 11.ALL THE EDGES IN THE BOX2D WORLD
      /*! * b1 is a body of type b2Body* which represents the edge.
       *  * bd is of type b2Bodydef which defines the body b1.
       *  * shape is of type b2EdgeShape which defines the shape as an edge between two endpoints given by (a,b),(c,d).
@@ -589,7 +596,7 @@ namespace cs251
    }
 
     //The pulley system near wheels
-     //! 12.PULLEY SYSTEM NEAR WHEELS
+    //! 12.PULLEY SYSTEM NEAR WHEELS
      /*! * box1,box2 are bodies of type b2Body* which represents the open box,bar in pulley system.
       *  * bd is of type b2Bodydef which defines the bodies box1,box2.
       *  * bs,s are of type b2PolygonShape which defines the shape of bodies box1,box2.
@@ -801,9 +808,14 @@ namespace cs251
          body2->CreateFixture(fd);
          body3->CreateFixture(fd);
          body4->CreateFixture(fd);
+        /* body1->SetGravityScale(0);
+         body2->SetGravityScale(0);
+         body3->SetGravityScale(0);
+         body4->SetGravityScale(0);*/
       b2RevoluteJointDef jointDef1;
       jointDef1.bodyA = body1;
       jointDef1.bodyB = body4;
+      //jointDef1.maxLength=0.10001f;
       jointDef1.localAnchorA.Set(2.5,0);
       jointDef1.localAnchorB.Set(-2.5,0);
       jointDef1.collideConnected = true;
@@ -811,6 +823,7 @@ namespace cs251
       b2RevoluteJointDef jointDef2;
       jointDef2.bodyA = body2;
       jointDef2.bodyB = body3;
+      //jointDef2.maxLength=0.10001f;
       jointDef2.localAnchorA.Set(2.5,0);
       jointDef2.localAnchorB.Set(-2.5,0);
       jointDef2.collideConnected = true;
@@ -818,6 +831,7 @@ namespace cs251
       b2RevoluteJointDef jointDef3;
       jointDef3.bodyA = body1;
       jointDef3.bodyB = body2;
+      //jointDef3.maxLength=0.00001f;
       jointDef3.localAnchorA.Set(0,0);
       jointDef3.localAnchorB.Set(0,0);
       jointDef3.collideConnected = false;
@@ -825,24 +839,11 @@ namespace cs251
       b2RevoluteJointDef jointDef4;
       jointDef4.bodyA = body3;
       jointDef4.bodyB = body4;
+      //jointDef4.maxLength=0.00001f;
       jointDef4.localAnchorA.Set(0,0);
       jointDef4.localAnchorB.Set(0,0);
       jointDef4.collideConnected = false;
       m_world->CreateJoint(&jointDef4);
-      // box
-      b2PolygonShape shape1;
-      shape.SetAsBox(1.0f, 1.0f);
-
-      b2FixtureDef fd1;
-      fd1.shape = &shape1;
-      fd1.density = 10.0f;
-      fd1.friction = 1.0f;
-      fd1.restitution = 0.0f;
-	  b2BodyDef bd;
-	  bd.type = b2_dynamicBody;
-	  bd.position.Set(19.5f, 13.0f);
-	  b2Body* body = m_world->CreateBody(&bd);
-	  body->CreateFixture(&fd1);
       }
 
       //conveyor belt
@@ -925,7 +926,20 @@ namespace cs251
       ballbd.position.Set(36.f, 38.0f);s2 = m_world->CreateBody(&ballbd);s2->CreateFixture(&ballfd);
       s1->SetAngularVelocity(1.7);
       s2->SetAngularVelocity(1.7);
+      // box
+      b2PolygonShape shape;
+      shape.SetAsBox(1.0f, 1.0f);
 
+      b2FixtureDef fd;
+      fd.shape = &shape;
+      fd.density = 10.0f;
+      fd.friction = 1.0f;
+      fd.restitution = 0.0f;
+	  b2BodyDef bd;
+	  bd.type = b2_dynamicBody;
+	  bd.position.Set(19.5f, 13.0f);
+	  b2Body* body = m_world->CreateBody(&bd);
+	  body->CreateFixture(&fd);
     }
 
      // lifting
@@ -980,7 +994,7 @@ namespace cs251
      }
 
      // wedge - seesaw system
-     //! 17.SEE-SAW SYSTEM
+    //! 17.SEE-SAW SYSTEM
      /*! * sbody,body,body3 are bodies of type b2Body* which represents the triangular wedge,plank on wedge,box on plank.
       *  * wedgebd,bd2,bd3 are of type b2Bodydef which defines the bodies sbody,body,body3 respectively.
       *  * poly,shape,shape2 are of type b2PolygonShape which defines the shapes of sbody,body,body3.
@@ -1051,3 +1065,5 @@ namespace cs251
 
   sim_t *sim = new sim_t("Turning alarm off", dominos_t::create);
 }
+
+
