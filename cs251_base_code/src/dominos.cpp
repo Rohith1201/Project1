@@ -41,7 +41,7 @@ using namespace std;
 
 namespace cs251
 {
-  /**  The is the constructor
+  /**  This is the constructor
    * This is the documentation block for the constructor.
    */
 
@@ -49,7 +49,14 @@ namespace cs251
   {
   #define DEGTORAD 0.0174532925199432957f
     //Ground
-
+    //! 1.GROUND
+     /** * b1 is a body of type b2Body* which represents the ground.
+      *  * bd is of type b2Bodydef which defines the body.
+      *  * shape is of type b2EdgeShape which defines the shape of b1 as an edge.
+      *  * Set() sets the end points of the edge for the shape.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to b1.
+      */
     b2Body* b1;
     {
       b2EdgeShape shape;
@@ -60,7 +67,18 @@ namespace cs251
     }
 
     //Top horizontal shelf
-
+    //! 2.TOP HORIZONTAL SHELF
+     /*! * ground is a body of type b2Body* which represents the top horizontal shelf.
+      *  * body is a body of type b2Body* which represents the last domino attached to top horizontal shelf.
+      *  * bd is of type b2Bodydef which defines the body.
+      *  * shape is of type b2PolygonShape which defines the shape of ground as a polygon.
+      *  * SetAsBox() sets the shape as a rectangle of given dimensions.
+      *  * bd.position.Set() sets the position of body ground.
+      *  * revoluteJointDef is a revolute joint between ground and body.
+      *  * CreateJoint creates joint between bodies ground and body.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to ground.
+      */
     {
       b2PolygonShape shape;
       shape.SetAsBox(6.0f, 0.25f);
@@ -93,7 +111,18 @@ namespace cs251
     }
 
     //Dominos
-
+    //! 3.DOMINOS
+     /*! * body is a variable of type b2Body* which represents each dominos.
+      *  * bd is of type b2Bodydef which defines the body variable.
+      *  * shape is of type b2PolygonShape which defines the shape of ground as a polygon.
+      *  * SetAsBox() sets the shape variable as a rectangle of given dimensions.
+      *  * bd.position.Set() sets the position of body.
+      *  * bd.type=b2_dynamicbody sets the body as a dynamic body.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to ground.
+      *  * fd is a class of type b2FixtureDef which represents the fixtures of a body variable.
+      *  * fd.density sets the density of body .fd.friction sets the friction coefficient of the body.
+      */
     {
       b2PolygonShape shape;
       shape.SetAsBox(0.1f, 1.0f);
@@ -114,7 +143,15 @@ namespace cs251
     }
 
     //Another horizontal shelf
-
+    //! 4.ANOTHER HORIZONTAL SHELF
+     /*! * ground is a body of type b2Body* which represents the top horizontal shelf.
+      *  * bd is of type b2Bodydef which defines the body.
+      *  * shape is of type b2PolygonShape which defines the shape of ground as a polygon.
+      *  * SetAsBox() sets the shape as a rectangle of given dimensions.
+      *  * bd.position.Set() sets the position of body ground.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to ground.
+      */
     {
       b2PolygonShape shape;
       shape.SetAsBox(7.0f, 0.25f, b2Vec2(-24.5f,20.f), 0.0f);
@@ -126,7 +163,16 @@ namespace cs251
     }
 
   // alarm shelf
-
+  //! 5.HORIZONTAL SHELF ON WHICH ALARM IS PLACED
+     /*! * alarm is a body of type b2Body* which represents the horizontal shelf on which alarm is placed.
+      *  * alarmbutton is a body of type b2Body* which represents the alarm button.
+      *  * bd is of type b2Bodydef which defines the bodies alarm,alarmbutton.
+      *  * shape is of type b2PolygonShape which defines the shape of ground as a polygon.
+      *  * SetAsBox() sets the shape as a rectangle of given dimensions.
+      *  * bd.position.Set() sets the position of body ground.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to ground.
+      */
     {
       b2PolygonShape shape;
       shape.SetAsBox(2.0f, 0.2f);
@@ -142,7 +188,18 @@ namespace cs251
       alarmbutton->CreateFixture(&shape, 0.0f);
       }
     //The pendulum that knocks the dominos off
-
+    //! 6.PENDULUM
+     /*! * b4,b2 are bodies of type b2Body* which represents the pendulum bob,fixed base.
+      *  * bd is of type b2Bodydef which defines the bodies b4,b2.
+      *  * shape is of type b2PolygonShape which defines the shape of b4,b2.
+      *  * SetAsBox() sets the shape of a body as a rectangle.
+      *  * (b4/b2).position.Set() sets the position of bodies.
+      *  * (b4/b2).type = b2_dynamicBody sets bodies as  dynamic bodies.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to b4,b2.
+      *  * jd is of type b2RevoluteJointDef which defines the revolute joint between b4,b2.
+      *  * CreateJoint creates joint with properties of jd.
+      */
     {
       b2Body* b2;
       {
@@ -175,7 +232,19 @@ namespace cs251
     }
 
     //The train of small spheres
-
+     //! 7.ALL SPHERES IN THE BOX2D WORLD
+     /*! * spherebody is a body of type b2Body* which represents a sphere.
+      *  * ballbd is of type b2Bodydef which defines the body spherebody.
+      *  * circle is of type b2CircleShape which defines the shape of spherebody as a circle.
+      *  * circle.m_radies sets the radius of spherebody.
+      *  * ballbd.position.Set() sets the position of body ground.
+      *  * ballbd.type = b2_dynamicBody sets sbody as a dynamic body.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to sbody.
+      *  * ballfd is a class of type b2FixtureDef which represents the fixtures of a spherebody variable.
+      *  * ballfd.density sets the density of spherebody; ballfd.friction sets the friction coefficient of spherebody;
+      *  * ballfd.restitution sets the restitution coefficient of spherebody.
+      */
     {
       b2Body* spherebody;
       //b2Body* spherebody1;
@@ -240,15 +309,29 @@ namespace cs251
 	  ballfd.density = 30.0f;
       spherebody = m_world->CreateBody(&ballbd);
 	  spherebody->CreateFixture(&ballfd);
-	  //ballbd.position.Set(32.0+i*0.001,i-1.5);
-	  //spherebody1 = m_world->CreateBody(&ballbd);
-	  //spherebody1->CreateFixture(&ballfd);
 	  }
 	}
     }
 
      //The pulley system below pendulum
-
+     //! 8.PULLEY SYSTEM BELOW PENDULUM
+     /*! * box1,box2 are bodies of type b2Body* which represents the open box,bar in pulley system.
+      *  * bd is of type b2Bodydef which defines the bodies box1,box2.
+      *  * bs1,bs2,bs3 are of type b2PolygonShape which defines the shape of bodies.
+      *  * SetAsBox() sets the shape as a rectangle of given dimensions.
+      *  * bd.position.Set() sets the position of bodies.
+      *  * bd.type = b2_dynamicBody sets bodies as  dynamic bodies.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to bodies.
+      *  * fd1,fd2,fd3 are classes of type b2FixtureDef which represents the fixtures of box1,box2 variables.
+      *  * myjoint is of type b2PulleyJointDef* which definees the pulley joint between box1,box2.
+      *  * Initialize() initializes the joint between box1,box2.
+      *  * CreateJoint() creates joint between box1,box2.
+      *  * b2Vec2 worldAnchorOnBody1()- Anchor point on box1 in world axis.
+      *  * b2Vec2 worldAnchorOnBody2()- Anchor point on box2 in world axis
+      *  * b2Vec2 worldAnchorGround1()- Anchor point for ground 1 in world axis
+      *  * b2Vec2 worldAnchorGround2()- Anchor point for ground 2 in world axis
+      */
     {
       b2BodyDef *bd = new b2BodyDef;
       bd->type = b2_dynamicBody;
@@ -304,7 +387,21 @@ namespace cs251
     }
 
         //The revolving horizontal platform
-
+     //! 9.ROTATING PLATFORMS
+     /*! * body,body2 are bodies of type b2Body* which represents the rotating platform.
+      *  * bd,bd2 are of type b2Bodydef which defines the bodies body,body2 respectively.
+      *  * shape,shape2 are of type b2PolygonShape which defines the shape of body,body2.
+      *  * SetAsBox() sets the shape of a body as a rectangle.
+      *  * (bd/bd2).position.Set() sets the position of bodies.
+      *  * (bd/bd2).type = b2_dynamicBody sets bodies as  dynamic bodies.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to body,body2.
+      *  * fd is a class of type b2FixtureDef which represents the fixtures of body,body2 variables.
+      *  * (bd/bd2).density sets the density of bodies; (bd/bd2).friction sets the friction coefficient of bodyies;
+      *  * (bd/bd2).restitution sets the restitution coefficient of bodies.
+      *  * jointDef is of type b2RevoluteJointDef which defines the revolute joint between body,body2.
+      *  * CreateJoint creates revolute joint with properties of jointDef.
+      */
     {
       b2PolygonShape shape;
       shape.SetAsBox(2.8f, 0.2f);
@@ -316,8 +413,6 @@ namespace cs251
       fd->density = 1.f;
       fd->shape = new b2PolygonShape;
       fd->shape = &shape;
-
-
       b2PolygonShape shape2;
       shape2.SetAsBox(0.2f, 2.8f);
       b2BodyDef bd2;
@@ -342,11 +437,28 @@ namespace cs251
       jointDef.collideConnected = false;
       m_world->CreateJoint(&jointDef);
       }
-
     }
 
-
     //The pulley system above spring
+     //! 10.PULLEY SYSTEM ABOVE SPRING
+     /*! * box1,box2 are bodies of type b2Body* which represents the open box,bar in pulley system.
+      *  * bd is of type b2Bodydef which defines the bodies box1,box2.
+      *  * bs1,bs2,bs3 are of type b2PolygonShape which defines the shape of bodies.
+      *  * SetAsBox() sets the shape as a rectangle of given dimensions.
+      *  * bd.position.Set() sets the position of bodies.
+      *  * bd.type = b2_dynamicBody sets bodies as  dynamic bodies.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to bodies.
+      *  * fd1,fd2,fd3 are classes of type b2FixtureDef which represents the fixtures of box1,box2 variables.
+      *  * myjoint is of type b2PulleyJointDef* which definees the pulley joint between box1,box2.
+      *  * Initialize() initializes the joint between box1,box2.
+      *  * CreateJoint() creates joint between box1,box2.
+      *  * b2Vec2 worldAnchorOnBody1()- Anchor point on box1 in world axis.
+      *  * b2Vec2 worldAnchorOnBody2()- Anchor point on box2 in world axis.
+      *  * b2Vec2 worldAnchorGround1()- Anchor point for ground 1 in world axis.
+      *  * b2Vec2 worldAnchorGround2()- Anchor point for ground 2 in world axis.
+      *  * (box1/box2)->SetGravityScale(0) sets zero gravity for the bodies.
+      */
     {
       b2BodyDef *bd = new b2BodyDef;
       bd->type = b2_dynamicBody;
@@ -408,7 +520,15 @@ namespace cs251
     }
 
  // surface
-
+ //! 11.ALL THE EDGES IN THE BOX2D WORLD
+     /*! * b1 is a body of type b2Body* which represents the edge.
+      *  * bd is of type b2Bodydef which defines the body b1.
+      *  * shape is of type b2EdgeShape which defines the shape as an edge between two endpoints given by (a,b),(c,d).
+      *  * Set() sets the edge between two given vertices.
+      *  * fd1 is type b2FixtureDef* which defines the fixtures of body b1.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to ground.
+      */
  for(int i=0;i<32;i++){
  float a,b,c,d;
  //bottom ege
@@ -469,6 +589,24 @@ namespace cs251
    }
 
     //The pulley system near wheels
+     //! 12.PULLEY SYSTEM NEAR WHEELS
+     /*! * box1,box2 are bodies of type b2Body* which represents the open box,bar in pulley system.
+      *  * bd is of type b2Bodydef which defines the bodies box1,box2.
+      *  * bs,s are of type b2PolygonShape which defines the shape of bodies box1,box2.
+      *  * SetAsBox() sets the shape as a rectangle of given dimensions.
+      *  * bd.position.Set() sets the position of bodies.
+      *  * bd.type = b2_dynamicBody sets bodies as  dynamic bodies.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to bodies.
+      *  * fd1 is a class of type b2FixtureDef which represents the fixtures of box1,box2 variables.
+      *  * myjoint is of type b2PulleyJointDef* which definees the pulley joint between box1,box2.
+      *  * Initialize() initializes the joint between box1,box2.
+      *  * CreateJoint() creates joint between box1,box2.
+      *  * b2Vec2 worldAnchorOnBody1()- Anchor point on box1 in world axis.
+      *  * b2Vec2 worldAnchorOnBody2()- Anchor point on box2 in world axis
+      *  * b2Vec2 worldAnchorGround1()- Anchor point for ground 1 in world axis
+      *  * b2Vec2 worldAnchorGround2()- Anchor point for ground 2 in world axis
+      */
     {
       b2BodyDef *bd = new b2BodyDef;
       bd->type = b2_dynamicBody;
@@ -511,6 +649,28 @@ namespace cs251
 
 
     //bigpulley on left side
+    //! 13.LEFT MOST PULLEY SYSTEM WITH THREE PULLEYS
+     /*! * This system is made as a combination of two pulley systems sharing a common body.
+      *  * box1,box2,box3 are bodies of type b2Body* which represents the open box,common body,bar in pulley system.
+      *  * bd is of type b2Bodydef which defines the bodies box1,box2,box3.
+      *  * bs1,bs2,bs3 are of type b2PolygonShape which defines the shape of bodies box1,box3.
+      *  * SetAsBox() sets the shape as a rectangle of given dimensions.
+      *  * bd.position.Set() sets the position of bodies.
+      *  * bd.type = b2_dynamicBody sets bodies as  dynamic bodies.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to bodies.
+      *  * fd1,fd2,fd3 are classes of type b2FixtureDef which represents the fixtures of box1,box3 bodies.
+      *  * myjoint is of type b2PulleyJointDef* which definees the pulley joint between box1,box2.
+      *  * myjoint->Initialize() initializes the joint between box1,box2.
+      *  * CreateJoint(myjoint) creates joint between box1,box2.
+      *  * myjoint1 is of type b2PulleyJointDef* which definees the pulley joint between box2,box3.
+      *  * myjoint1->Initialize() initializes the joint between box2,box3.
+      *  * CreateJoint(myjoint1) creates joint between box2,box3.
+      *  * b2Vec2 worldAnchorOnBody1()- Anchor point on box1 in world axis.
+      *  * b2Vec2 worldAnchorOnBody2()- Anchor point on box2 in world axis
+      *  * b2Vec2 worldAnchorGround1()- Anchor point for ground 1 in world axis
+      *  * b2Vec2 worldAnchorGround2()- Anchor point for ground 2 in world axis
+      */
     {
      //The pulley system
 
@@ -591,6 +751,23 @@ namespace cs251
 
 
     //spring
+    //! 14.SPRING SYSTEM
+     /*! * body1,body2,body3,body4 are bodies of type b2Body* which represents the rods making a spring system.
+      *  * body is body of type b2Body* which represents the box beside the spring.
+      *  * bd1,bd2,bd3,bd4 are of type b2Bodydef which defines the bodies body1,body2,body3,body4 respectively.
+      *  * shape,shape1 are of type b2PolygonShape which defines the shapes of (body1,body2,body3,body4) and body respectively.
+      *  * (bd1/bd2/bd3/bd4).position.Set() sets the position of bodies body1,body2,body3,body4.
+      *  * (bd1/bd2/bd3/bd4).type = b2_dynamicBody sets bodies as dynamic bodies.
+      *  * (bd1/bd2/bd3/bd4).angle sets the angular orientation of bodies body1,body2,body3,body4,.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to bodies.
+      *  * fd is a class of type b2FixtureDef which represents the fixtures of body1,body2,body3,body4 bodies.
+      *  * fd.density sets the density of bodies;fd.friction sets the friction coefficient of bodies;
+      *  * fd.restitution sets the restitution coefficient of bodies.
+      *  * jointDef1,jointDef2,jointDef3,jointDef4 are of type b2RevoluteJointDef which are the revolute joints
+           between bodies body1 and body4;body2 and body3;body1 and body2;body3 and body4 respectively.
+      *  * CreateJoint() creates revolute joint between two bodies.
+      */
     {
       b2PolygonShape shape;
       shape.SetAsBox(2.5f, 0.2f);
@@ -624,14 +801,9 @@ namespace cs251
          body2->CreateFixture(fd);
          body3->CreateFixture(fd);
          body4->CreateFixture(fd);
-        /* body1->SetGravityScale(0);
-         body2->SetGravityScale(0);
-         body3->SetGravityScale(0);
-         body4->SetGravityScale(0);*/
       b2RevoluteJointDef jointDef1;
       jointDef1.bodyA = body1;
       jointDef1.bodyB = body4;
-      //jointDef1.maxLength=0.10001f;
       jointDef1.localAnchorA.Set(2.5,0);
       jointDef1.localAnchorB.Set(-2.5,0);
       jointDef1.collideConnected = true;
@@ -639,7 +811,6 @@ namespace cs251
       b2RevoluteJointDef jointDef2;
       jointDef2.bodyA = body2;
       jointDef2.bodyB = body3;
-      //jointDef2.maxLength=0.10001f;
       jointDef2.localAnchorA.Set(2.5,0);
       jointDef2.localAnchorB.Set(-2.5,0);
       jointDef2.collideConnected = true;
@@ -647,7 +818,6 @@ namespace cs251
       b2RevoluteJointDef jointDef3;
       jointDef3.bodyA = body1;
       jointDef3.bodyB = body2;
-      //jointDef3.maxLength=0.00001f;
       jointDef3.localAnchorA.Set(0,0);
       jointDef3.localAnchorB.Set(0,0);
       jointDef3.collideConnected = false;
@@ -655,14 +825,45 @@ namespace cs251
       b2RevoluteJointDef jointDef4;
       jointDef4.bodyA = body3;
       jointDef4.bodyB = body4;
-      //jointDef4.maxLength=0.00001f;
       jointDef4.localAnchorA.Set(0,0);
       jointDef4.localAnchorB.Set(0,0);
       jointDef4.collideConnected = false;
       m_world->CreateJoint(&jointDef4);
+      // box
+      b2PolygonShape shape1;
+      shape.SetAsBox(1.0f, 1.0f);
+
+      b2FixtureDef fd1;
+      fd1.shape = &shape1;
+      fd1.density = 10.0f;
+      fd1.friction = 1.0f;
+      fd1.restitution = 0.0f;
+	  b2BodyDef bd;
+	  bd.type = b2_dynamicBody;
+	  bd.position.Set(19.5f, 13.0f);
+	  b2Body* body = m_world->CreateBody(&bd);
+	  body->CreateFixture(&fd);
       }
 
       //conveyor belt
+      //! 15.CONVEYOR BELT
+     /*! * s11,s12,s13,s14,s21,s22,s23,s24,sb11,sb13 are bodies of type b2Body* which represents the rectangular boxes used in making the belt.
+      *  * s1,s2 are bodies of type b2Body* which represents the two rotating circles responsible for movement of belt.
+      *  * bd1,bd2,bd3,bd4 are of type b2Bodydef which defines the bodies body1,body2,body3,body4 respectively.
+      *  * bs is of type b2PolygonShape which defines the shapes of s11,s12,s13,s14,s21,s22,s23,s24,sb11,sb13 as a polygon.
+      *  * circle is of type b2Circleshape which defines the shapes of s1,s2 as a sphere.
+      *  * ballbd.position.Set() sets the position of bodies s11,s12,s13,s14,s21,s22,s23,s24,sb11,sb13,s1,s2.
+      *  * ballbd.type = b2_dynamicBody sets bodies s11,s12,s13,s14,s21,s22,s23,s24,sb11,sb13 as dynamic bodies.
+      *  * ballbd.type = b2_dynamicBody sets bodies s1,s2 as kinematic bodies.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to bodies.
+      *  * ballfd is a class of type b2FixtureDef which represents the fixtures of s11,s12,s13,s14,s21,s22,s23,s24,sb11,sb13,s1,s2.
+      *  * ballfd.density sets the density of bodies;ballfd.friction sets the friction coefficient of bodies;
+      *  * ballfd.restitution sets the restitution coefficient of bodies.
+      *  * jointDef11,jointDef21 are of type b2RopeJointDef which are the rope joints
+           between the rectangular boxex forming a conveyor belt.
+      *  * CreateJoint() creates rope joint between two bodies.
+      */
       {
       b2Body *s11,*s12,*s13,*s14,*s21,*s22,*s23,*s24,*sb11,*sb13,*s1,*s2;
 
@@ -724,23 +925,25 @@ namespace cs251
       ballbd.position.Set(36.f, 38.0f);s2 = m_world->CreateBody(&ballbd);s2->CreateFixture(&ballfd);
       s1->SetAngularVelocity(1.7);
       s2->SetAngularVelocity(1.7);
-      // box
-      b2PolygonShape shape;
-      shape.SetAsBox(1.0f, 1.0f);
 
-      b2FixtureDef fd;
-      fd.shape = &shape;
-      fd.density = 10.0f;
-      fd.friction = 1.0f;
-      fd.restitution = 0.0f;
-	  b2BodyDef bd;
-	  bd.type = b2_dynamicBody;
-	  bd.position.Set(19.5f, 13.0f);
-	  b2Body* body = m_world->CreateBody(&bd);
-	  body->CreateFixture(&fd);
     }
 
      // lifting
+     //! 16.LIFTING THROUGH ROTATING WHEELS
+     /*! * body1,body2 are bodies of type b2Body* which represents the two rods making a rotating wheel.
+      *  * bd1,bd2 are of type b2Bodydef which defines the bodies body1,body2 respectively.
+      *  * shape is of type b2PolygonShape which defines the shapes of body1,body2.
+      *  * (bd1/bd2).position.Set() sets the position of bodies triangular body1,body2.
+      *  * (bd1/bd2).type = b2_kinematicBody sets bodies as kinematic bodies.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to bodies.
+      *  * fd is a class of type b2FixtureDef which represents the fixtures of body1,body2 bodies.
+      *  * fd.density sets the density of bodies;fd.friction sets the friction coefficient of bodies;
+      *  * fd.restitution sets the restitution coefficient of bodies.
+      *  * jointDef1 is of type b2RevoluteJointDef which is the revolute joint between body1 and body2 i.e between two rods of a rotating wheel.
+      *  * CreateJoint(&jointDef1) creates revolute joint between body1 and body2.
+      *  * body1->SetAngularVelocity(),body2->SetAngularVelocity() sets angular velocities to the bodies.
+      */
      {
       b2PolygonShape shape;
       shape.SetAsBox(1.0f, 0.1f);
@@ -777,7 +980,19 @@ namespace cs251
      }
 
      // wedge - seesaw system
-
+     //! 17.SEE-SAW SYSTEM
+     /*! * sbody,body,body3 are bodies of type b2Body* which represents the triangular wedge,plank on wedge,box on plank.
+      *  * wedgebd,bd2,bd3 are of type b2Bodydef which defines the bodies sbody,body,body3 respectively.
+      *  * poly,shape,shape2 are of type b2PolygonShape which defines the shapes of sbody,body,body3.
+      *  * wedgebd(bd2/bd3).position.Set() sets the position of bodies triangular wedge/plank on wedge/box .
+      *  * wedgebd(bd2/bd3).type = b2_dynamicBody sets bodies as  dynamic bodies.
+      *  * CreateBody() creates body with particular body definition.
+      *  * CreateFixture() applies fixtures to bodies.
+      *  * wedgefd,fd2,fd3 are classes of type b2FixtureDef which represents the fixtures of sbody,body,body3 variables.
+      *  * wedgefd(fd2/fd3).density sets the density of bodies; wedgebd(bd2/bd3).friction sets the friction coefficient of bodyies;
+      *  * wedgefd(fd2/fd3).restitution sets the restitution coefficient of bodies.
+      *  * jd is of type b2RevoluteJointDef which is the revolute joint between wedge and plank i.e between bodies sbody,body.
+      */
      {
       //The triangle wedge
       b2Body* sbody;
